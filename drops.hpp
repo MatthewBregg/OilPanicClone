@@ -27,7 +27,9 @@ public:
   void draw(sf::RenderWindow* w);
   void addDrop();
   void update();
+  int getOuts();
 private:
+  int outs;
   std::vector<drop> drops;
   sf::Texture* t;
   sf::Vector2u* winSize;

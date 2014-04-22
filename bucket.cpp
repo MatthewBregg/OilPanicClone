@@ -16,6 +16,18 @@ void Bucket::draw(sf::RenderWindow* w)
 
   w->draw(*this->buck);
 }
+int Bucket::getOverFlows()
+{
+  return overflow;
+}
+void Bucket::update()
+{
+  if (fillStatus == (signed)texts.size()-1)
+    {
+      fillStatus = 0;
+      buck->setTexture(texts.at(0));
+    }
+}
 void Bucket::move(int A)
 {
   if ( (bucketX > -(signed)winSize->x+50 && A < 0 ) || ( bucketX < 50 && A > 0) )

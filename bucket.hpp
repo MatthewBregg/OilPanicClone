@@ -15,6 +15,7 @@ public:
   void move(int A);
   sf::Sprite* getBucket();
   void hitDrop();
+  int getOverFlows();
 private:
   sf::Sprite* buck;
   std::vector<sf::Texture> texts; 

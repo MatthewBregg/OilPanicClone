@@ -68,7 +68,7 @@ void drop::move(int x)
 droplets::droplets(sf::Texture* T, class Bucket* b, sf::Vector2u* winS)
 {
   srand (time(NULL));
- 
+  outs = 0; 
   this->t = T;
   this->winSize=winS;
   this->buck = b;
@@ -95,6 +95,11 @@ void droplets::draw(sf::RenderWindow* w)
    	 drops.at(i).draw(w); 
   }
 }
+int droplets::getOuts()
+{
+
+  return outs;
+}
 void droplets::update()
 {
 
@@ -103,6 +108,7 @@ void droplets::update()
     if (drops.at(i).outOfBounds(winSize) )
       {
 	std::cout << "Out" << std::endl;
+	outs++;
 	this->drops.at(i)=drops.at(drops.size()-1);
 	this->drops.pop_back();
       }
