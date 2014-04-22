@@ -81,6 +81,13 @@ std::cout << "Font load failed" << std::endl;
 		window.close();
 		return 1;
 		}
+	      if ( event.type == sf::Event::KeyPressed)
+		{
+		  if (event.key.code == sf::Keyboard::Space)
+		    {
+		      buck.emptyBucket(0);
+		    }
+		}
 	      if ( event.type == sf::Event::LostFocus)
 		{
 

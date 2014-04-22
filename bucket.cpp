@@ -32,6 +32,14 @@ void Bucket::update()
 	}
     }
 }
+void Bucket::emptyBucket(int x)
+{
+  buck->setTexture(texts.at(texts.size()-2));
+  score+=fillStatus;
+  fillStatus=texts.size()-2;
+  timer.restart();
+  
+}
 void Bucket::move(int A)
 {
   if ( (bucketX > -(signed)winSize->x+50 && A < 0 ) || ( bucketX < 50 && A > 0) )
