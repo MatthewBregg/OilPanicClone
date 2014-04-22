@@ -42,7 +42,7 @@ bool drop::hitBucket(sf::Sprite* bucket)
 {
   sf::Vector2f temp = this->droplet->getOrigin();
   sf::Vector2f bucketO = bucket->getOrigin();
-  std::cout << bucketO.y << " and " << temp.y << std::endl;
+  //std::cout << bucketO.y << " and " << temp.y << std::endl;
   if ( (abs(bucketO.y - temp.y)) > 25 )
     {
       return false;
@@ -57,11 +57,12 @@ bool drop::hitBucket(sf::Sprite* bucket)
   
 }
 //droplets here
-droplets::droplets(sf::Texture* T, sf::Sprite* b, sf::Vector2u* winS)
+droplets::droplets(sf::Texture* T, class Bucket* b, sf::Vector2u* winS)
 {
   this->t = T;
   this->winSize=winS;
-  this->bucket = b;
+  this->buck = b;
+  this->bucket = buck->getBucket();
   
 }
 void droplets::addDrop()
@@ -85,12 +86,20 @@ void droplets::update()
     if (drops.at(i).outOfBounds(winSize) )
       {
 	std::cout << "Out" << std::endl;
+	this->drops.at(i)=drops.at(drops.size()-1);
+	this->drops.pop_back();
       }
-    if ( drops.at(i).hitBucket(bucket))
+    else if ( drops.at(i).hitBucket(bucket))
 	 {
-	std::cout << "Bucket Hit" << std::endl;
+	   buck->hitDrop();
+	   this->drops.at(i)=drops.at(drops.size()-1);
+	   this->drops.pop_back();
+
+
 	
 	 }
+    else{
 	 drops.at(i).update();
+    }
   }
 }

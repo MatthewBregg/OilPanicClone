@@ -4,6 +4,7 @@
 #include <SFML/Window.hpp>
 #include "drops.hpp"
 #include <vector>
+#include "bucket.hpp"
 // If something has an origin of (x, y) then it's as if you take the (x, y)th pixel of the image and treat that as the origin of the image. So your top corner is now offset by -x, -y.
 
 // Basically it gets the final coordinate of the top left of the image by doing position - origin
@@ -18,16 +19,20 @@ int main()
   
   //Texture and Sprite stuff
   //Load the texture and make the sprite
-  sf::Texture bucketT;
   sf::Texture dropletT;
-
-  if (!bucketT.loadFromFile("Images/simpleBucket.png"))
+  std::vector<sf::Texture> textures;
+for (int i = 0; i < 5; ++i)
+  {
+    textures.push_back(sf::Texture()); 
+  
+    if (!textures.at(i).loadFromFile("Images/simpleBucket"+std::to_string(i)+".png"))
     {
       std::cout << "Bucket texture failed to laod" << std::endl;
-      bucketT.setSmooth(true);
+      textures.at(i).setSmooth(true);
 
       //Make that bucket smooth and aliased
     }
+  }
 
   if (!dropletT.loadFromFile("Images/drop.png"))
     {
@@ -38,17 +43,14 @@ int main()
     }
   //Bucket sprite
   sf::Sprite bucketS;
-  bucketS.setTexture(bucketT);
-  //Set the bucket to a resonable size
-   sf::Vector2u winSize = window.getSize();
-  
-  sf::FloatRect bucketBoundBox = bucketS.getGlobalBounds();
 
-  int bucketX = -(signed)winSize.x/2; 
-  const int bucketY = -(signed)winSize.y + 200;
-  bucketS.setOrigin(sf::Vector2f(bucketX,bucketY));
+   sf::Vector2u winSize = window.getSize();
+   Bucket buck = Bucket(textures, &bucketS, &winSize); 
+  
+
+
  //Droplet sprite
-  droplets drops(&dropletT,&bucketS, &winSize);  
+  droplets drops(&dropletT,&buck, &winSize);  
   drops.addDrop();
   
   //Begin all the window stuff
@@ -74,26 +76,15 @@ int main()
 	    }
 	  if (event.type == sf::Event::MouseWheelMoved)
 	    {
-	      
+	      int a = event.mouseWheel.delta; 
+	      buck.move(a);
 	     
-	      if ( (bucketX > -(signed)winSize.x+50 && event.mouseWheel.delta < 0 ) || ( bucketX < 50 && event.mouseWheel.delta > 0) )
-		{
-		  bucketX += 15*event.mouseWheel.delta;
-		  // std::cout << " Position is X " << bucketS.getPosition().x << " Origin is " << bucketS.getOrigin().x << std::endl;
-		  // std::cout << " Position is Y " << bucketS.getPosition().y << " Origin is " << bucketS.getOrigin().y << std::endl;
-		  bucketS.setOrigin(sf::Vector2f(bucketX,bucketY));
-		  bucketBoundBox = bucketS.getGlobalBounds();
-
-		}
-	      // 	std::cout << "wheel movement: " << event.mouseWheel.delta << std::endl;
-	      // 	std::cout << "mouse x: " << event.mouseWheel.x << std::endl;
-	      // 	std::cout << "mouse y: " << event.mouseWheel.y << std::endl;
 	    }
         }
  
       //Draw shit
       window.clear(sf::Color(255,255,255));
-      window.draw(bucketS);
+      buck.draw(&window);
       //Draw,update, and etc all the drops.
       drops.update();
       drops.draw(&window);

@@ -5,6 +5,7 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <vector>
+#include "bucket.hpp"
 class drop
 {
 public:
@@ -21,7 +22,7 @@ private:
 class droplets
 {
 public:
-  droplets(sf::Texture* T, sf::Sprite* b, sf::Vector2u* winS);
+  droplets(sf::Texture* T, Bucket* b, sf::Vector2u* winS);
   void draw(sf::RenderWindow* w);
   void addDrop();
   void update();
@@ -29,6 +30,7 @@ private:
   std::vector<drop> drops;
   sf::Texture* t;
   sf::Vector2u* winSize;
+  Bucket* buck; 
   sf::Sprite* bucket;
 
 };
