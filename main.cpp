@@ -48,7 +48,8 @@ int main()
   const int bucketY = -(signed)winSize.y + 200;
   bucketS.setOrigin(sf::Vector2f(bucketX,bucketY));
  //Droplet sprite
-  std::vector<drop> drops = {(drop(&dropletT))};
+  droplets drops(&dropletT);  
+  drops.addDrop();
   
   //Begin all the window stuff
 
@@ -94,11 +95,8 @@ int main()
       window.clear(sf::Color(255,255,255));
       window.draw(bucketS);
       //Draw,update, and etc all the drops.
-      for (unsigned int i = 0; i < drops.size(); ++i)
-       {
-	 drops.at(i).update();
-	 drops.at(i).draw(&window); 
-       } 
+      drops.update();
+      drops.draw(&window);
       window.display();
       winSize = window.getSize();
 

@@ -1,4 +1,5 @@
 #include "drops.hpp"
+//Drop here
 drop::drop(sf::Texture* T)
 {
   this->t = T;
@@ -20,4 +21,31 @@ void drop::update()
        pacer.restart();     
        droplet->setOrigin(tempDrop);
        return;
+}
+//droplets here
+droplets::droplets(sf::Texture* T)
+{
+  this->t = T;
+  
+}
+void droplets::addDrop()
+{
+  this->drops.push_back(drop(t));
+  return;
+
+}
+void droplets::draw(sf::RenderWindow* w)
+{
+  for (unsigned int i = 0; i < this->drops.size(); ++i)
+  {
+   	 drops.at(i).draw(w); 
+  }
+}
+void droplets::update()
+{
+
+  for (unsigned int i = 0; i < this->drops.size(); ++i)
+  {
+	 drops.at(i).update();
+  }
 }
