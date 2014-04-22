@@ -48,7 +48,7 @@ int main()
   const int bucketY = -(signed)winSize.y + 200;
   bucketS.setOrigin(sf::Vector2f(bucketX,bucketY));
  //Droplet sprite
-  droplets drops(&dropletT);  
+  droplets drops(&dropletT,&bucketS, &winSize);  
   drops.addDrop();
   
   //Begin all the window stuff
