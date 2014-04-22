@@ -16,7 +16,9 @@ public:
   sf::Sprite* getBucket();
   void hitDrop();
   int getOverFlows();
+  int getScore();
 private:
+  int score;
   sf::Sprite* buck;
   std::vector<sf::Texture> texts; 
   sf::Vector2u* winSize;
@@ -24,6 +26,7 @@ private:
   int bucketY;
   int overflow;
   int fillStatus;
+  sf::Clock timer;
 };
 
 

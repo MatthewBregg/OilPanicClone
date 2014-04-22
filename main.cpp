@@ -24,7 +24,7 @@ int main()
       //Load the texture and make the sprite
       sf::Texture dropletT;
       std::vector<sf::Texture> textures;
-      for (int i = 0; i < 5; ++i)
+      for (int i = 0; i < 6; ++i)
 	{
 	  textures.push_back(sf::Texture()); 
   
@@ -98,7 +98,7 @@ std::cout << "Font load failed" << std::endl;
 		}
 	    }
 	  //updateScore
-	  score.setString("Lives: " + std::to_string(lives-liveslost));
+	  score.setString("Lives: " + std::to_string(lives-liveslost) + "\nScore: " + std::to_string(buck.getScore()));
 	  //Draw shit
 	  window.clear(sf::Color(255,255,255));
      

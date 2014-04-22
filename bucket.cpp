@@ -1,6 +1,7 @@
 #include "bucket.hpp"
 Bucket::Bucket(std::vector<sf::Texture> t, sf::Sprite* b, sf::Vector2u* winS)
 {
+  this->score = 0;
   this->buck = b;
   this->texts = t;
   this->winSize = winS;
@@ -22,10 +23,13 @@ int Bucket::getOverFlows()
 }
 void Bucket::update()
 {
-  if (fillStatus == (signed)texts.size()-1)
+  if (fillStatus == (signed)texts.size()-1 || fillStatus == (signed)texts.size()-2)
     {
-      fillStatus = 0;
-      buck->setTexture(texts.at(0));
+      if ( timer.getElapsedTime() > sf::seconds(1))
+	{
+	  fillStatus = 0;
+	  buck->setTexture(texts.at(0));
+	}
     }
 }
 void Bucket::move(int A)
@@ -52,17 +56,23 @@ void Bucket::hitDrop()
 {
   //Check if the bucket is full
 
-  if (  fillStatus > (signed)texts.size() -3 )
+  if (  fillStatus > (signed)texts.size() -4 )
     {
       overflow++;
-      fillStatus = 0;
+      fillStatus = texts.size()-1;
+      timer.restart();
     }
   else{
     fillStatus++;
+    score++;
   }
   std::cout << "Fill is " << fillStatus<< std::endl;
 
   buck->setTexture(texts.at(fillStatus));
 
   
+}
+int Bucket::getScore()
+{
+  return score;
 }
