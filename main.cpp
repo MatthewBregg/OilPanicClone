@@ -84,10 +84,11 @@ for (int i = 0; i < 5; ++i)
  
       //Draw shit
       window.clear(sf::Color(255,255,255));
-      buck.draw(&window);
+     
       //Draw,update, and etc all the drops.
       drops.update();
       drops.draw(&window);
+      buck.draw(&window);
       window.display();
       winSize = window.getSize();
 

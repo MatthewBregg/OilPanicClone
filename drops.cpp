@@ -51,23 +51,40 @@ bool drop::hitBucket(sf::Sprite* bucket)
   sf::FloatRect dropBoundBox = droplet->getGlobalBounds();
   if ( bucketBoundBox.intersects(dropBoundBox))
     {
+      std::cout << "Caught" << std::endl;
       return true;
     }
   return false;
   
 }
+void drop::move(int x)
+{
+ 
+  droplet->setOrigin(-x,droplet->getOrigin().y);
+
+
+}
 //droplets here
 droplets::droplets(sf::Texture* T, class Bucket* b, sf::Vector2u* winS)
 {
+  srand (time(NULL));
+ 
   this->t = T;
   this->winSize=winS;
   this->buck = b;
   this->bucket = buck->getBucket();
+  this->spawnAmount = 1;
+  this->spawnRate = sf::seconds(5);
+  return;
+ 
   
 }
 void droplets::addDrop()
 {
-  this->drops.push_back(drop(t));
+  drop temp = drop(t);
+  
+  temp.move(rand()%winSize->x);
+  this->drops.push_back(temp);
   return;
 
 }
@@ -94,12 +111,22 @@ void droplets::update()
 	   buck->hitDrop();
 	   this->drops.at(i)=drops.at(drops.size()-1);
 	   this->drops.pop_back();
-
-
+	   return;
 	
 	 }
     else{
 	 drops.at(i).update();
     }
   }
+  if ( pacer.getElapsedTime() > spawnRate )
+    {
+      spawnRate -= sf::seconds(1);
+      if ( spawnRate < sf::seconds(1))
+	{
+	  spawnRate = sf::seconds(5);
+	}
+      pacer.restart();
+  	  this->addDrop();
+
+    }
 }

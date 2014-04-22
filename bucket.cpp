@@ -39,7 +39,8 @@ sf::Sprite* Bucket::getBucket()
 void Bucket::hitDrop()
 {
   //Check if the bucket is full
-  if (  fillStatus == (signed)texts.size() - 2 )
+
+  if (  fillStatus > (signed)texts.size() -3 )
     {
       overflow++;
       fillStatus = 0;
@@ -47,6 +48,7 @@ void Bucket::hitDrop()
   else{
     fillStatus++;
   }
+  std::cout << "Fill is " << fillStatus<< std::endl;
 
   buck->setTexture(texts.at(fillStatus));
 

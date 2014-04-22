@@ -10,6 +10,7 @@ class drop
 {
 public:
   drop(sf::Texture* T);
+  void move(int x);
   void draw(sf::RenderWindow* w);
   void update();
   bool outOfBounds(sf::Vector2u* wSize);
@@ -32,6 +33,9 @@ private:
   sf::Vector2u* winSize;
   Bucket* buck; 
   sf::Sprite* bucket;
+  sf::Clock pacer;
+  sf::Time spawnRate;
+  int spawnAmount;
 
 };
   
