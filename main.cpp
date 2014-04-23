@@ -13,6 +13,8 @@ int main()
 {
   while (1)
     {
+      sf::Clock pacer;
+      int collectorD = 1;
   
       int lives = 10;
       int liveslost = 0;
@@ -66,7 +68,17 @@ std::cout << "Failed to load the rain cloud" << std::endl;
       cloudT.setSmooth(true);
       sf::Sprite cloudS;
       cloudS.setTexture(cloudT);
-      
+      //The collectormabob
+      sf::Texture collectorT;
+      if (!collectorT.loadFromFile("Images/collector.png"))
+	{
+
+	  std::cout << "COllecor image failed to load" << std::endl;
+	}
+      collectorT.setSmooth(true);
+      sf::Sprite collectorS;
+      collectorS.setTexture(collectorT);
+      collectorS.setOrigin(0,-580);
       //Load the font in, and set up the text object for score.
       sf::Font FreeSans;
       if ( !FreeSans.loadFromFile("font/FreeSans.otf"))
@@ -117,6 +129,13 @@ std::cout << "Font load failed" << std::endl;
 	     
 		}
 	    }
+	  //make the collector move
+	  if ( collectorS.getOrigin().x < -(signed)winSize.x ||  collectorS.getOrigin().x > 0 )
+	    {
+	      collectorD *= -1;
+	    }
+	  collectorS.setOrigin(collectorS.getOrigin().x - collectorD*pacer.getElapsedTime().asSeconds()*20,collectorS.getOrigin().y);
+	  pacer.restart(); 
 	  //updateScore
 	  score.setString("Lives: " + std::to_string(lives-liveslost) + "\nScore: " + std::to_string(buck.getScore()));
 	  //Draw shit
@@ -127,6 +146,7 @@ std::cout << "Font load failed" << std::endl;
 	  drops.draw(&window);
 	  buck.draw(&window);
 	  buck.update();
+	  window.draw(collectorS);
 	  window.draw(cloudS);
 	  window.draw(score);
 	  window.display();
