@@ -110,7 +110,7 @@ std::cout << "Font load failed" << std::endl;
 		{
 		  if (event.key.code == sf::Keyboard::Space)
 		    {
-		      buck.emptyBucket(0);
+		      buck.emptyBucket(&collectorS);
 		    }
 		}
 	      if ( event.type == sf::Event::LostFocus)
@@ -130,7 +130,7 @@ std::cout << "Font load failed" << std::endl;
 		}
 	    }
 	  //make the collector move
-	  if ( collectorS.getOrigin().x < -(signed)winSize.x ||  collectorS.getOrigin().x > 0 )
+	  if ( collectorS.getOrigin().x < -(signed)winSize.x+100 ||  collectorS.getOrigin().x > 0 )
 	    {
 	      collectorD *= -1;
 	    }

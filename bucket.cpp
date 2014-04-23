@@ -32,12 +32,20 @@ void Bucket::update()
 	}
     }
 }
-void Bucket::emptyBucket(int x)
+void Bucket::emptyBucket(sf::Sprite* A)
 {
+  sf::FloatRect collectorBounds = A->getGlobalBounds();
+  sf::FloatRect bucketBounds = buck->getLocalBounds();
+  sf::Vector2f point = sf::Vector2f(-(signed)buck->getOrigin().x+bucketBounds.width/2,-(signed)A->getOrigin().y);
+
+  if ( collectorBounds.contains(point) && fillStatus > 0)
+    {
+
   buck->setTexture(texts.at(texts.size()-2));
   score+=fillStatus;
   fillStatus=texts.size()-2;
   timer.restart();
+    }
   
 }
 void Bucket::move(int A)

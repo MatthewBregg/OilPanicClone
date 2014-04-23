@@ -17,7 +17,7 @@ public:
   void hitDrop();
   int getOverFlows();
   int getScore();
-  void emptyBucket(int x);
+  void emptyBucket(sf::Sprite* A);
 private:
   int score;
   sf::Sprite* buck;
