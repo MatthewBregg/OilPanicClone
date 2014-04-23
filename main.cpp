@@ -5,10 +5,18 @@
 #include "drops.hpp"
 #include <vector>
 #include "bucket.hpp"
+#include <stdlib.h>
+#include <stdio.h>
+#include <sstream>
 // If something has an origin of (x, y) then it's as if you take the (x, y)th pixel of the image and treat that as the origin of the image. So your top corner is now offset by -x, -y.
 
 // Basically it gets the final coordinate of the top left of the image by doing position - origin
-
+std::string convertInt(int x)
+{
+  std::stringstream ss;
+  ss << x;
+  return ss.str();
+}
 int main()
 {
   while (1)
@@ -26,11 +34,12 @@ int main()
       //Load the texture and make the sprite
       sf::Texture dropletT;
       std::vector<sf::Texture> textures;
+ 
       for (int i = 0; i < 6; ++i)
 	{
 	  textures.push_back(sf::Texture()); 
   
-	  if (!textures.at(i).loadFromFile("Images/simpleBucket"+std::to_string(i)+".png"))
+	  if (!textures.at(i).loadFromFile("Images/simpleBucket"+convertInt(i)+".png"))
 	    {
 	      std::cout << "Bucket texture failed to laod" << std::endl;
 
@@ -137,7 +146,7 @@ std::cout << "Font load failed" << std::endl;
 	  collectorS.setOrigin(collectorS.getOrigin().x - collectorD*pacer.getElapsedTime().asSeconds()*20,collectorS.getOrigin().y);
 	  pacer.restart(); 
 	  //updateScore
-	  score.setString("Lives: " + std::to_string(lives-liveslost) + "\nScore: " + std::to_string(buck.getScore()));
+	  score.setString("Lives: " + convertInt(lives-liveslost) + "\nScore: " + convertInt(buck.getScore()));
 	  //Draw shit
 	  window.clear(sf::Color(255,255,255));
      

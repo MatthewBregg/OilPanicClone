@@ -2,7 +2,7 @@
 #Compiler
 CC = g++
 #Cflags
-CFLAGS =  -Wall -std=c++0x 
+CFLAGS =  -Wall 
 #Libraries
 LIB =  -lsfml-window -lsfml-system -lsfml-graphics
 all: main
