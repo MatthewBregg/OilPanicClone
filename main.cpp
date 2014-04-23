@@ -31,19 +31,21 @@ int main()
 	  if (!textures.at(i).loadFromFile("Images/simpleBucket"+std::to_string(i)+".png"))
 	    {
 	      std::cout << "Bucket texture failed to laod" << std::endl;
-	      textures.at(i).setSmooth(true);
+
 
 	      //Make that bucket smooth and aliased
 	    }
+	      textures.at(i).setSmooth(true);
 	}
 
       if (!dropletT.loadFromFile("Images/drop.png"))
 	{
 	  std::cout << "Droplet texture failed to laod" << std::endl;
-	  dropletT.setSmooth(true);
+
 
 	  //Make that droplet smooth and aliased
 	}
+	  dropletT.setSmooth(true);
       //Bucket sprite
       sf::Sprite bucketS;
 
@@ -55,6 +57,16 @@ int main()
       //Droplet sprite
       droplets drops(&dropletT,&buck, &winSize);  
       drops.addDrop();
+      //raincloud sprite
+      sf::Texture cloudT;
+      if (!cloudT.loadFromFile("Images/raincloud.png"))
+	{
+std::cout << "Failed to load the rain cloud" << std::endl;
+	}
+      cloudT.setSmooth(true);
+      sf::Sprite cloudS;
+      cloudS.setTexture(cloudT);
+      
       //Load the font in, and set up the text object for score.
       sf::Font FreeSans;
       if ( !FreeSans.loadFromFile("font/FreeSans.otf"))
@@ -66,6 +78,7 @@ std::cout << "Font load failed" << std::endl;
       score.setCharacterSize(24);
       score.setColor(sf::Color::Black);
       score.setStyle(sf::Text::Bold);
+      score.move(0,40);
       //Begin all the window stuff
 
       while (window.isOpen() &&  (lives - liveslost) > 0 )
@@ -114,6 +127,7 @@ std::cout << "Font load failed" << std::endl;
 	  drops.draw(&window);
 	  buck.draw(&window);
 	  buck.update();
+	  window.draw(cloudS);
 	  window.draw(score);
 	  window.display();
 	  winSize = window.getSize();
